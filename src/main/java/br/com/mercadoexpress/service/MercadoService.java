@@ -43,6 +43,14 @@ public class MercadoService {
     }
 
     @Transactional(readOnly = true)
+    public MercadoResponse pesquisarPorId(Long id) {
+        var mercado = mercadoRepository.findById(id)
+                .orElseThrow(() -> new IdNaoEncontradoException(id));
+        return new MercadoResponse(mercado.getId(), mercado.getNome(), mercado.getTipo(),
+                mercado.getSetor(), mercado.getTamanho(), mercado.getPreco());
+    }
+
+    @Transactional(readOnly = true)
     public MercadoResponse atualizar(Long id, MercadoRequest mercadoRequest) {
         var mercado = mercadoRepository.findById(id)
                 .orElseThrow(() -> new IdNaoEncontradoException(id));
