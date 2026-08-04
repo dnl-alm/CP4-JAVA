@@ -50,7 +50,7 @@ public class MercadoService {
                 mercado.getSetor(), mercado.getTamanho(), mercado.getPreco());
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public MercadoResponse atualizar(Long id, MercadoRequest mercadoRequest) {
         var mercado = mercadoRepository.findById(id)
                 .orElseThrow(() -> new IdNaoEncontradoException(id));
