@@ -13,6 +13,9 @@ API REST desenvolvida em **Spring Boot** para gerenciamento de produtos de um me
 - [Testes via Postman/Insomnia](#testes-via-postmaninsomnia)
 - [HATEOAS — Nível de maturidade 3](#hateoas--nível-de-maturidade-3)
 
+![PRINT1_SPRING](docs/images/specs_1.png)
+![PRINT2_SPRING](docs/images/specs_2.png)
+
 ## Tecnologias utilizadas
 
 | Tecnologia | Finalidade |
@@ -62,7 +65,7 @@ Tabela `TDS_TB_mercado` no Oracle:
 | TAMANHO | Double | Tamanho/volume do produto |
 | PRECO | Double | Preço unitário |
 
-`[PRINT AQUI]` — captura de tela do SQL Developer mostrando a tabela `TDS_TB_mercado` criada, com suas colunas visíveis no painel de estrutura.
+![BD_ORACLE](docs/images/BD_DEVELOPER_print.png)
 
 ## Como executar o projeto
 
@@ -116,7 +119,7 @@ Todos os testes abaixo foram feitos apontando para `http://localhost:8082`.
 }
 ```
 
-`[PRINT AQUI]` — tela do Postman/Insomnia com o método POST selecionado, o corpo JSON na aba "Body", e a resposta 201 retornada abaixo.
+![POST](docs/images/POST_mercado.png)
 
 ### 2. GET /mercado — Listar todos
 
@@ -141,7 +144,7 @@ Retorna uma página (`Page<MercadoResponse>`) com os produtos cadastrados no ban
 }
 ```
 
-`[PRINT AQUI]` — tela do Postman/Insomnia com o método GET em `/mercado` e a lista retornada.
+![GET_ALL](docs/images/GET_listarTodos_mercado.png)
 
 ### 3. GET /mercado/{id} — Buscar por ID
 
@@ -162,11 +165,9 @@ Retorna uma página (`Page<MercadoResponse>`) com os produtos cadastrados no ban
 }
 ```
 
-`[PRINT AQUI]` — tela do GET `/mercado/1` mostrando o produto e o bloco `_links`.
+![GET_POR_ID](docs/images/GET_pesquisarPorId_mercado.png)
 
 **Teste de erro — ID inexistente (ex: `/mercado/999`):**
-
-`[PRINT AQUI]` — tela mostrando o tratamento de exceção (`IdNaoEncontradoException`) quando o ID não existe.
 
 ### 4. PUT /mercado/{id} — Atualizar produto
 
@@ -196,17 +197,13 @@ Retorna uma página (`Page<MercadoResponse>`) com os produtos cadastrados no ban
 }
 ```
 
-`[PRINT AQUI]` — tela do PUT em `/mercado/1` com o corpo da requisição e a resposta com os dados atualizados.
+![PUT](docs/images/PUT_atualizar_mercado.png)
 
 ### 5. DELETE /mercado/{id} — Remover produto
 
 **Resposta esperada:** `204 No Content`.
 
-`[PRINT AQUI]` — tela do DELETE em `/mercado/1` mostrando o status 204.
-
-**Confirmação da exclusão:** um novo GET `/mercado/1` deve retornar erro (produto não encontrado).
-
-`[PRINT AQUI]` — tela do GET `/mercado/1` após a exclusão, confirmando que o registro não existe mais no Oracle.
+![DELETE](docs/images/DELETE_mercado.png)
 
 ## HATEOAS — Nível de maturidade 3
 
