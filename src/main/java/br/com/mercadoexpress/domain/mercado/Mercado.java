@@ -24,8 +24,8 @@ public class Mercado {
 
     private String setor;
 
-    private double tamanho;
+    private Double tamanho;
 
-    private double preco;
+    private Double preco;
 
 }

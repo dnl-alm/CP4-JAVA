@@ -5,12 +5,13 @@ import br.com.mercadoexpress.dto.request.MercadoRequest;
 import br.com.mercadoexpress.dto.response.MercadoResponse;
 import br.com.mercadoexpress.service.MercadoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,13 +22,13 @@ public class MercadoController {
     private final MercadoAssembler mercadoAssembler;
 
     @PostMapping
-    public ResponseEntity<MercadoResponse> criar(MercadoRequest mercadoRequest) {
+    public ResponseEntity<MercadoResponse> criar(@RequestBody MercadoRequest mercadoRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(mercadoService.criar(mercadoRequest));
     }
 
     @GetMapping
-    public ResponseEntity<List<MercadoResponse>> listarTudo() {
-        return ResponseEntity.ok(mercadoService.listarTudo());
+    public ResponseEntity<Page<MercadoResponse>> listarTudo(Pageable pageable) {
+        return ResponseEntity.ok(mercadoService.listarTudo(pageable));
     }
 
     @GetMapping("/{id}")
@@ -37,7 +38,7 @@ public class MercadoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EntityModel<MercadoResponse>> atualizar(@PathVariable Long id, MercadoRequest mercadoRequest) {
+    public ResponseEntity<EntityModel<MercadoResponse>> atualizar(@PathVariable Long id, @RequestBody MercadoRequest mercadoRequest) {
         var mercado = mercadoService.atualizar(id, mercadoRequest);
         return ResponseEntity.ok(mercadoAssembler.toModel(mercado));
     }

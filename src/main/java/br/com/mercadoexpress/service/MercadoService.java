@@ -7,6 +7,8 @@ import br.com.mercadoexpress.exception.IdNaoEncontradoException;
 import br.com.mercadoexpress.repository.MercadoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,11 +37,10 @@ public class MercadoService {
     }
 
     @Transactional(readOnly = true)
-    public List<MercadoResponse> listarTudo() {
-        return mercadoRepository.findAll().stream()
+    public Page<MercadoResponse> listarTudo(Pageable pageable) {
+        return mercadoRepository.findAll(pageable)
                 .map(m -> new MercadoResponse(m.getId(), m.getNome(),
-                        m.getTipo(), m.getSetor(), m.getTamanho(), m.getPreco()))
-                .toList();
+                        m.getTipo(), m.getSetor(), m.getTamanho(), m.getPreco()));
     }
 
     @Transactional(readOnly = true)
@@ -62,6 +63,9 @@ public class MercadoService {
                 .tamanho(mercadoRequest.tamanho())
                 .preco(mercadoRequest.preco())
                 .build();
+
+        mercadoAtualizado.setId(mercado.getId());
+        mercadoRepository.save(mercadoAtualizado);
 
         return new MercadoResponse(mercadoAtualizado.getId(), mercadoAtualizado.getNome(), mercadoAtualizado.getTipo(),
                 mercadoAtualizado.getSetor(), mercadoAtualizado.getTamanho(), mercadoAtualizado.getPreco());
