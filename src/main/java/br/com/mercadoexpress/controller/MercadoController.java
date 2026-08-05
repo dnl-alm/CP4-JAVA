@@ -7,7 +7,9 @@ import br.com.mercadoexpress.service.MercadoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,15 +22,19 @@ public class MercadoController {
 
     private final MercadoService mercadoService;
     private final MercadoAssembler mercadoAssembler;
+    private final PagedResourcesAssembler<MercadoResponse> pagedAssembler;
 
     @PostMapping
-    public ResponseEntity<MercadoResponse> criar(@RequestBody MercadoRequest mercadoRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(mercadoService.criar(mercadoRequest));
+    public ResponseEntity<EntityModel<MercadoResponse>> criar(@RequestBody MercadoRequest mercadoRequest) {
+        var mercado = mercadoService.criar(mercadoRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(mercadoAssembler.toModel(mercado));
     }
 
     @GetMapping
-    public ResponseEntity<Page<MercadoResponse>> listarTudo(Pageable pageable) {
-        return ResponseEntity.ok(mercadoService.listarTudo(pageable));
+    public ResponseEntity<PagedModel<EntityModel<MercadoResponse>>> listarTudo(Pageable pageable) {
+        Page<MercadoResponse> page = mercadoService.listarTudo(pageable);
+        PagedModel<EntityModel<MercadoResponse>> model = pagedAssembler.toModel(page, mercadoAssembler);
+        return ResponseEntity.ok(model);
     }
 
     @GetMapping("/{id}")
