@@ -18,14 +18,17 @@ public class Mercado {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, length = 50)
     private String nome;
 
+    @Column(nullable = false, length = 50)
     private String tipo;
 
     private String setor;
 
     private Double tamanho;
 
+    @Column(nullable = false)
     private Double preco;
 
 }

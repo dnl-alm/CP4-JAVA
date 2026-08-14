@@ -4,6 +4,7 @@ import br.com.mercadoexpress.domain.mercado.MercadoAssembler;
 import br.com.mercadoexpress.dto.request.MercadoRequest;
 import br.com.mercadoexpress.dto.response.MercadoResponse;
 import br.com.mercadoexpress.service.MercadoService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +26,7 @@ public class MercadoController {
     private final PagedResourcesAssembler<MercadoResponse> pagedAssembler;
 
     @PostMapping
-    public ResponseEntity<EntityModel<MercadoResponse>> criar(@RequestBody MercadoRequest mercadoRequest) {
+    public ResponseEntity<EntityModel<MercadoResponse>> criar(@RequestBody @Valid MercadoRequest mercadoRequest) {
         var mercado = mercadoService.criar(mercadoRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(mercadoAssembler.toModel(mercado));
     }
@@ -44,7 +45,7 @@ public class MercadoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EntityModel<MercadoResponse>> atualizar(@PathVariable Long id, @RequestBody MercadoRequest mercadoRequest) {
+    public ResponseEntity<EntityModel<MercadoResponse>> atualizar(@PathVariable Long id, @RequestBody @Valid MercadoRequest mercadoRequest) {
         var mercado = mercadoService.atualizar(id, mercadoRequest);
         return ResponseEntity.ok(mercadoAssembler.toModel(mercado));
     }
