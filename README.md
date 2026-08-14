@@ -3,7 +3,10 @@
 API REST desenvolvida em **Spring Boot** para gerenciamento de produtos de um mercado (ex: meias, produtos de limpeza, frutas), com persistência em banco de dados **Oracle** e retorno de recursos no padrão **HATEOAS** (nível de maturidade 3 do modelo de Richardson).
 
 ### Link Deploy:
-`https://cp4-java-cyxe.onrender.com`
+`https://checkpoint4-java-mercadoexpress.onrender.com`
+
+- Swagger:
+  `https://checkpoint4-java-mercadoexpress.onrender.com/swagger-ui/index.html`
 
 ## Sumário
 
